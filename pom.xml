@@ -44,5 +44,6 @@
 		<module>application-commons</module>
 		<module>application-dao</module>
 		<module>application-services</module>
+		<module>wage-payment-admin</module>
 	</modules>
 </project>
