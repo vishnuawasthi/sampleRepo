@@ -1,0 +1,13 @@
+git clone --branch master --origin origin --progress -v https://github.com/vishnuawasthi/multi-module-parent.git
+
+git remote add NEW_FOLDER
+ 
+ 
+ git mv !(multi-module-parent) multi-module-parent
+ 
+ Without Losing File History
+A while ago my team had code for our project spread out in two different Git repositories.  Over time we realized that there was no good reason for this arrangement and was just a general hassle and source of friction, so we decided to combine our two repositories into one repository containing both halves of the code base, with each of the old repositories in its own subdirectory.  However, we wanted to preserve all of the change history from each repo and have it available in the new repository.
+
+The good news is that Git makes this sort of thing very easy to do.  Since a repository in Git is just a directed acyclic graph, it’s trivial to glue two graphs together and make one big graph.  The bad news is that there are a few different ways to do it and some of them end up with a less desirable result (at least for our purposes) than others.  For instance, do a web search on this subject and you’ll get a lot of information about git submodules or subtree merges, both of which are kind of complex and are designed for the situation where you’re trying to bring in source code from an external project or library and you want to bring in more changes from that project in the future, or ship your changes back to them.  One side effect of this is that when you import the source code using a subtree merge all of the files show up as newly added files.  You can see the history of commits for those files in aggregate (i.e. you can view the commits in the DAG) but if you try to view the history for a specific file in your sub-project all you’ll get is one commit for that file – the subtree merge.
+
+This is generally not a problem for the “import an external library” scenario but I was trying to do something different.  I wanted to glue to repositories together and have them look as though they had always been one repository all along.  I didn’t need the ability to extract changes and ship them back anywhere because my old repositories would be retired.  Fortunately, after much research and trial-and-error it turned out that it’s actually very easy to do what I was trying to do and it requires just a couple of straightforward git commands.
